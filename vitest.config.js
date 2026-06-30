@@ -10,11 +10,13 @@ export default defineConfig({
   test: {
     // jsdom supplies browser-like globals without launching a real browser.
     environment: 'jsdom',
+    // Keep all unit tests in one predictable location.
+    include: ['tests/unit/**/*.{test,spec}.{js,jsx}'],
     coverage: {
       // V8 coverage is fast and maps executed JavaScript back to source lines.
       provider: 'v8',
-      // Catalog helpers contain the deterministic business logic under unit test.
-      include: ['src/catalog.js'],
+      // Unit-tested helper modules are covered explicitly by the gate.
+      include: ['src/catalog.js', 'src/export.js'],
       // Fail the command whenever line coverage falls below the requested 90% gate.
       thresholds: { lines: 90 },
     },

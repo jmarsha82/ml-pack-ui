@@ -27,7 +27,25 @@ The native service listens only on `127.0.0.1:7312`. Its current executable endp
 
 ## Tests
 
+Unit tests live in one unified location: `tests/unit`. Vitest is configured to
+discover tests from that directory and to enforce at least 90% line coverage for
+the unit-tested helper modules.
+
 ```powershell
+npm test
 npm run test:coverage
 npm run build
 ```
+
+## CI pipeline
+
+GitHub Actions runs the pipeline in `.github/workflows/ci.yml` on pushes, pull
+requests, and manual dispatches.
+
+- Unit Tests: installs dependencies and runs `npm run test:coverage`.
+- Production Build: runs `npm run build` after the unit tests pass.
+- Supply Chain: runs Dependency Review on pull requests and `npm audit` for
+  production dependency vulnerabilities.
+- Code Scanning / Security: runs CodeQL with the extended security query suite.
+- Code Scanning / Quality: runs CodeQL with the security-and-quality query suite
+  as a separate code scanning job.

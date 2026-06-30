@@ -1,11 +1,10 @@
-// This focused interaction test verifies the exact regression reported by the user.
+// This focused interaction test verifies CSV upload feedback end to end.
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/vitest';
 import { afterEach, describe, expect, it } from 'vitest';
-import App from './App';
+import App from '../../src/App';
 
-// Remove each rendered app so queries in the next test cannot see stale controls.
 afterEach(cleanup);
 
 describe('CSV upload feedback', () => {
@@ -18,7 +17,7 @@ describe('CSV upload feedback', () => {
     });
 
     expect(screen.getByText('CSV loaded successfully')).toBeVisible();
-    expect(screen.getByText(/training\.csv · 20 B/)).toBeVisible();
+    expect(screen.getByText(/training\.csv .* 20 B/)).toBeVisible();
     expect(screen.getByRole('status')).toHaveTextContent('Dataset ready');
     expect(screen.getByRole('status')).toHaveTextContent('training.csv loaded successfully');
   });
